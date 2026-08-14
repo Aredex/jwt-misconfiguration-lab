@@ -10,6 +10,30 @@
 
 **JWT Misconfiguration Lab: Separa decodificar, validar claims y verificar firma sin procesar secretos reales.**
 
+## Estado de despliegue (post-implementación)
+
+- **Producción (Cloudflare Pages):** https://jwt-misconfiguration-lab.pages.dev — desplegado y
+  verificado (200 OK, CSP y cabeceras de seguridad activas).
+- **Dominio propio:** `https://jwt-misconfiguration-lab.alexcuesta.dev` quedará activo cuando el
+  orquestador central del portafolio adjunte el registro DNS del subdominio (no lo gestiona este
+  proyecto individualmente, para evitar cambios DNS concurrentes entre los ~29 proyectos).
+- **Repositorio:** https://github.com/Aredex/jwt-misconfiguration-lab, rama `main`, CI en verde
+  (`quality` + `e2e`), tag `v1.0.0`.
+- **Sustituto de las "cinco pruebas observadas":** no hubo usuarios humanos disponibles durante el
+  desarrollo (proyecto ejecutado de forma autónoma). En su lugar, la suite E2E de Playwright
+  (`e2e/`) automatiza:
+  - `happy-path.spec.ts` — el recorrido de 30/90 s completo: ejecutar el fixture por defecto, abrir
+    un hallazgo, cambiar de escenario (parámetro distinto) y exportar evidencia en JSON.
+  - `adversarial-alg-none.spec.ts` — caso límite: el ataque clásico `alg: none` se clasifica como
+    hallazgo crítico.
+  - `custom-token-warning.spec.ts` — caso adversarial de producto: el modo "pegar un token propio"
+    exige el aviso de riesgo y el consentimiento explícito antes de habilitar la ejecución, y no
+    ejecuta con entrada estructuralmente inválida.
+  - `accessibility.spec.ts` — cero violaciones de accesibilidad críticas/serias (axe-core) en la
+    página principal.
+  - Los cuatro specs pasan en CI (GitHub Actions, `ubuntu-24.04`, Chromium) y localmente. Ningún
+    número de "usuarios reales" se publica: no se midió con personas, así que no se afirma.
+
 ## Caso de estudio
 
 1. Problema: tokens bien formados pueden aceptarse con issuer, audience, algoritmo o tiempos incorrectos.
