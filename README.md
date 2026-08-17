@@ -28,8 +28,8 @@ aviso explícito y una casilla de consentimiento, y en ese modo:
 
 Este es el riesgo más importante del proyecto: que alguien pegue un token real y confíe en un
 mensaje que sugiera "seguridad completa". El resumen de cada ejecución termina siempre con el
-mismo recordatorio: *"Esta herramienta no certifica seguridad: solo reporta los hallazgos de las
-comprobaciones deterministas que ejecutó."*
+mismo recordatorio: _"Esta herramienta no certifica seguridad: solo reporta los hallazgos de las
+comprobaciones deterministas que ejecutó."_
 
 ## Demo de 30/90 segundos
 
@@ -79,16 +79,16 @@ Visitante → React (workbench) → Web Worker (motor de dominio) → fixtures v
 
 ## Fixtures incluidos
 
-| Escenario | Categoría | Qué demuestra |
-|---|---|---|
-| `happy-path` | camino feliz | token válido: sin hallazgos bloqueantes |
-| `expired-token` | frontera | firma y claims correctos, pero `exp` ya pasó |
-| `wrong-audience` | frontera | `aud` no coincide con el servicio esperado |
-| `alg-none-attack` | adversarial | ataque clásico `alg: none` (bypass de firma) |
-| `algorithm-confusion` | adversarial | firma HMAC válida, pero algoritmo no permitido |
-| `boundary-exp` | frontera | `exp` exactamente igual al tiempo de referencia (frontera inclusiva) |
-| `invalid-structure` | entrada inválida | cadena sin la estructura de tres segmentos de un JWT |
-| `external-adapter-disabled` | dependencia caída | adaptador real desactivado (kill switch) → fallback determinista |
+| Escenario                   | Categoría         | Qué demuestra                                                        |
+| --------------------------- | ----------------- | -------------------------------------------------------------------- |
+| `happy-path`                | camino feliz      | token válido: sin hallazgos bloqueantes                              |
+| `expired-token`             | frontera          | firma y claims correctos, pero `exp` ya pasó                         |
+| `wrong-audience`            | frontera          | `aud` no coincide con el servicio esperado                           |
+| `alg-none-attack`           | adversarial       | ataque clásico `alg: none` (bypass de firma)                         |
+| `algorithm-confusion`       | adversarial       | firma HMAC válida, pero algoritmo no permitido                       |
+| `boundary-exp`              | frontera          | `exp` exactamente igual al tiempo de referencia (frontera inclusiva) |
+| `invalid-structure`         | entrada inválida  | cadena sin la estructura de tres segmentos de un JWT                 |
+| `external-adapter-disabled` | dependencia caída | adaptador real desactivado (kill switch) → fallback determinista     |
 
 ## Contratos
 
@@ -101,8 +101,8 @@ para verificar que los validadores manuales no diverjan del JSON Schema
 
 ## Seguridad
 
-- CSP restrictiva, `frame-ancestors 'none'`, `nosniff`, `Referrer-Policy` y `X-Robots-Tag: noindex`
-  en `public/_headers` (convención de Cloudflare Pages).
+- CSP restrictiva, `frame-ancestors 'none'`, `nosniff` y `Referrer-Policy` en `public/_headers`
+  (convención de Cloudflare Pages).
 - Nunca se usa `innerHTML` con entrada del visitante ni se ejecuta código pegado.
 - Nunca se registran payloads, tokens ni cabeceras (ni en consola, ni en analítica: esta demo no
   tiene analítica de terceros).
